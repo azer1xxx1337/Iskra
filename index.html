@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="ИСКРА — концепт лендинга крафтового лимонада">
+<title>Лимонад ИСКРА</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Onest:wght@400;500;600;700&display=swap">
+<style>
+@property --bg{syntax:'<color>';inherits:true;initial-value:#ff8f7e}
+@property --deep{syntax:'<color>';inherits:true;initial-value:#6e1428}
+@property --soft{syntax:'<color>';inherits:true;initial-value:#ffe6df}
+:root{
+  color-scheme:light;
+  --bg:#ff8f7e; --deep:#6e1428; --soft:#ffe6df; --paper:#fffaf6; --ink:#1d1416;
+  --display:"Dela Gothic One", "Arial Black", Impact, sans-serif;
+  --body:"Onest", "Segoe UI", system-ui, sans-serif;
+  transition:--bg .7s ease, --deep .7s ease, --soft .7s ease;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--deep);font:17px/1.55 var(--body);overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--deep);outline-offset:3px;border-radius:8px}
+.in{max-width:1200px;margin:0 auto}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.nav .in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.logo{font:400 26px/1 var(--display);letter-spacing:.02em;text-decoration:none;display:flex;align-items:center;gap:8px}
+.logo svg{width:22px;height:22px}
+.links{display:flex;gap:26px;font-weight:600;font-size:15px}
+.links a{text-decoration:none;opacity:.8}.links a:hover{opacity:1}
+.btn{display:inline-flex;align-items:center;gap:10px;border:0;cursor:pointer;text-decoration:none;font:700 16px/1 var(--body);padding:15px 24px;border-radius:999px;background:var(--deep);color:var(--soft);transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:transparent;color:var(--deep);box-shadow:inset 0 0 0 2px var(--deep)}
+.btn.sm{padding:11px 18px;font-size:14px}
+@media (max-width:760px){.links{display:none}}
+
+/* hero */
+.hero{position:relative;overflow:hidden}
+#bubbles{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero .in{position:relative;display:grid;grid-template-columns:1.05fr 1fr;gap:24px;align-items:center;padding-block:40px 60px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;padding:8px 14px;border-radius:999px;background:var(--soft)}
+.eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--deep)}
+h1{font:400 clamp(46px,7.4vw,104px)/.95 var(--display);letter-spacing:-.01em;margin:22px 0 22px;text-wrap:balance}
+.lead{font-size:clamp(18px,1.6vw,21px);max-width:34ch;margin:0 0 30px;opacity:.85}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.picker{margin-top:40px;display:grid;gap:12px}
+.picker .lab{font-size:13px;font-weight:600;opacity:.7;text-transform:uppercase;letter-spacing:.12em}
+.flv{display:flex;flex-wrap:wrap;gap:10px}
+.flv button{display:flex;align-items:center;gap:10px;border:0;cursor:pointer;padding:9px 16px 9px 9px;border-radius:999px;background:color-mix(in srgb,var(--soft) 55%,transparent);color:var(--deep);font:600 14px/1 var(--body);transition:background .3s}
+.flv button i{width:24px;height:24px;border-radius:50%;box-shadow:inset 0 -4px 6px rgba(0,0,0,.18)}
+.flv button[aria-pressed="true"]{background:var(--soft);box-shadow:0 0 0 2px var(--deep)}
+.stage{position:relative;aspect-ratio:1/1.08;max-width:100%}
+.stage canvas{width:100%;height:100%;display:block}
+.sticker{position:absolute;right:4%;top:10%;width:118px;height:118px;border-radius:50%;background:var(--deep);color:var(--soft);display:grid;place-items:center;text-align:center;
+  font:400 15px/1.1 var(--display);transform:rotate(12deg);animation:wob 6s ease-in-out infinite}
+.sticker b{display:block;font-size:30px}
+@keyframes wob{50%{transform:rotate(-6deg) scale(1.04)}}
+.flname{position:absolute;left:0;right:0;bottom:2%;text-align:center;font:400 clamp(18px,2vw,24px)/1.2 var(--display)}
+@media (max-width:860px){.hero .in{grid-template-columns:1fr;padding-block:20px 40px}.stage{order:-1;max-width:420px;margin:0 auto;width:100%}.picker{margin-top:28px}.sticker{width:92px;height:92px;font-size:12px}.sticker b{font-size:22px}}
+
+/* marquee */
+.mq{background:var(--deep);color:var(--soft);overflow:hidden;transform:rotate(-1.5deg);margin-block:-10px 10px;position:relative;z-index:2}
+.mq .t{display:flex;gap:40px;width:max-content;padding-block:16px;animation:mq 30s linear infinite;font:400 clamp(18px,2.2vw,26px)/1 var(--display);white-space:nowrap}
+.mq .t span::after{content:"✦";margin-left:40px}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* sections */
+section.blk{padding-block:96px}
+.kick{font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:.7;margin:0 0 14px}
+h2{font:400 clamp(34px,5vw,64px)/1 var(--display);margin:0 0 20px;text-wrap:balance;max-width:16ch}
+.intro{max-width:52ch;margin:0 0 48px;opacity:.85}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.fact{background:var(--soft);border-radius:28px;padding:26px 24px;min-width:0}
+.fact .v{font:400 clamp(44px,5vw,64px)/1 var(--display);letter-spacing:-.02em}
+.fact .v small{font-size:.42em;margin-left:4px}
+.fact p{margin:14px 0 0;font-size:15px;opacity:.85}
+@media (max-width:900px){.facts{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.facts{grid-template-columns:1fr}}
+
+.paper{background:var(--paper);color:var(--ink)}
+.paper .kick,.paper .intro{color:var(--ink)}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.card{border-radius:30px;padding:22px 20px 24px;display:flex;flex-direction:column;gap:14px;cursor:pointer;border:0;text-align:left;font:inherit;color:inherit;transition:transform .2s}
+.card:hover{transform:translateY(-6px)}
+.card .can{height:220px;display:grid;place-items:center}
+.card .can div{width:118px;height:200px;border-radius:16px/10px;background-size:100% 100%;
+  box-shadow:inset 14px 0 18px rgba(255,255,255,.35),inset -18px 0 22px rgba(0,0,0,.28),0 18px 26px -14px rgba(0,0,0,.5);position:relative;transition:transform .3s}
+.card .can div::before,.card .can div::after{content:"";position:absolute;left:4px;right:4px;height:10px;border-radius:50%;background:linear-gradient(90deg,#9ea3aa,#eef0f2 40%,#8b9097)}
+.card .can div::before{top:-5px}.card .can div::after{bottom:-5px}
+.card:hover .can div{transform:rotate(-6deg)}
+.card h3{font:400 22px/1.1 var(--display);margin:0}
+.card p{margin:0;font-size:15px;opacity:.85}
+.card .tag{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.7}
+.card[aria-pressed="true"]{box-shadow:0 0 0 3px var(--ink)}
+@media (max-width:980px){.cards{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.cards{grid-template-columns:1fr}.card .can{height:190px}}
+
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:2px solid var(--deep)}
+.step{padding:26px 22px 8px 0;min-width:0}
+.step .n{font:400 18px/1 var(--display);width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--deep);color:var(--soft);margin-top:-49px;margin-bottom:22px}
+.step h3{font:700 20px/1.2 var(--body);margin:0 0 8px}
+.step p{margin:0;font-size:15px;opacity:.85}
+@media (max-width:860px){.steps{grid-template-columns:1fr 1fr;row-gap:40px}}
+@media (max-width:480px){.steps{grid-template-columns:1fr}}
+
+/* order */
+.order{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:start}
+.box{background:var(--soft);border-radius:32px;padding:28px}
+.line{display:grid;grid-template-columns:auto 1fr auto auto;gap:14px;align-items:center;padding-block:14px;border-bottom:1.5px solid color-mix(in srgb,var(--deep) 20%,transparent)}
+.line:last-of-type{border-bottom:0}
+.line i{width:30px;height:30px;border-radius:50%;box-shadow:inset 0 -4px 6px rgba(0,0,0,.18)}
+.line .nm{font-weight:600;min-width:0}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:34px;height:34px;border-radius:50%;border:0;cursor:pointer;background:var(--deep);color:var(--soft);font:700 18px/1 var(--body)}
+.qty output{min-width:2ch;text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
+.line .sum{font-variant-numeric:tabular-nums;min-width:72px;text-align:right;font-weight:600}
+.total{display:grid;gap:10px;font-size:16px}
+.total div{display:flex;justify-content:space-between;gap:12px}
+.total .big{font:400 40px/1 var(--display);margin-top:6px}
+.total .note{font-size:14px;opacity:.75}
+.bar2{height:10px;border-radius:10px;background:color-mix(in srgb,var(--deep) 18%,transparent);overflow:hidden}
+.bar2 b{display:block;height:100%;background:var(--deep);border-radius:10px;transition:width .3s}
+.msg{margin-top:14px;font-size:14px;padding:12px 14px;border-radius:14px;background:var(--paper);color:var(--ink)}
+@media (max-width:900px){.order{grid-template-columns:1fr}}
+@media (max-width:420px){.line{grid-template-columns:auto 1fr auto}.line .sum{grid-column:2/-1;text-align:left;font-size:14px;opacity:.75}}
+
+footer{background:var(--deep);color:var(--soft)}
+footer .in{padding-block:56px 40px;display:grid;gap:30px}
+footer .big{font:400 clamp(64px,16vw,220px)/.8 var(--display);letter-spacing:-.02em;opacity:.95}
+footer .row{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:14px;opacity:.8}
+
+.rv{transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+.rv.pre{opacity:0;transform:translateY(36px)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.rv{transition:none}.rv.pre{opacity:1;transform:none}html{scroll-behavior:auto}:root{transition:none}}
+</style>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<header class="nav gut"><div class="in">
+  <a class="logo" href="#top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 5 14h6l-1 8 8-12h-6z" fill="currentColor"/></svg>ИСКРА</a>
+  <nav class="links" aria-label="Разделы"><a href="#inside">Состав</a><a href="#flavors">Вкусы</a><a href="#how">Как делаем</a></nav>
+  <a class="btn sm" href="#order">Собрать набор</a>
+</div></header>
+
+<main>
+<section class="hero gut" id="top">
+  <canvas id="bubbles" aria-hidden="true"></canvas>
+  <div class="in">
+    <div>
+      <span class="eyebrow"><i></i>Крафтовый лимонад</span>
+      <h1>Настоящие фрукты в твоей банке</h1>
+      <p class="lead">Холодный отжим, живая газация и ничего лишнего. Четыре вкуса, которые не притворяются фруктами — они ими сделаны.</p>
+      <div class="cta"><a class="btn" href="#order">Собрать набор
+        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="btn ghost" href="#flavors">Все вкусы</a></div>
+      <div class="picker"><span class="lab">Выберите вкус</span><div class="flv" id="flv" role="group" aria-label="Вкус"></div></div>
+    </div>
+    <div class="stage">
+      <canvas id="can" aria-label="3D-банка лимонада"></canvas>
+      <div class="sticker" aria-hidden="true"><div><b>6 г</b>сахара<br>на 100 мл</div></div>
+      <div class="flname" id="flname">Грейпфрут и розмарин</div>
+    </div>
+  </div>
+</section>
+
+<div class="mq" aria-hidden="true"><div class="t" id="mq">
+  <span>Без консервантов</span><span>12% фруктового сока</span><span>Живая газация</span><span>Холодный отжим</span><span>Банка 330 мл</span><span>Перерабатываемый алюминий</span>
+</div></div>
+
+<section class="blk gut" id="inside"><div class="in rv">
+  <p class="kick">Состав</p>
+  <h2>Мы читаем этикетку раньше вас</h2>
+  <p class="intro">В каждой банке только вода, сок, натуральные экстракты и немного тростникового сахара. Никаких ароматизаторов «идентичных натуральным».</p>
+  <div class="facts">
+    <div class="fact"><div class="v">12<small>%</small></div><p>сока холодного отжима в каждой банке</p></div>
+    <div class="fact"><div class="v">6<small>г</small></div><p>тростникового сахара на 100 мл — вдвое меньше обычной газировки</p></div>
+    <div class="fact"><div class="v">0</div><p>консервантов, красителей и подсластителей</p></div>
+    <div class="fact"><div class="v">27<small>ккал</small></div><p>на 100 мл, около 90 ккал в банке</p></div>
+  </div>
+</div></section>
+
+<section class="blk paper gut" id="flavors"><div class="in rv">
+  <p class="kick">Вкусы</p>
+  <h2>Четыре сочетания, которые хочется повторить</h2>
+  <p class="intro">Нажмите на банку, чтобы сайт перекрасился в её вкус.</p>
+  <div class="cards" id="cards"></div>
+</div></section>
+
+<section class="blk gut" id="how"><div class="in rv">
+  <p class="kick">Как делаем</p>
+  <h2>От ящика фруктов до банки — три дня</h2>
+  <p class="intro">Мы варим маленькими партиями по 800 литров, поэтому каждая партия пробуется руками, а не датчиками.</p>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><h3>Отжимаем</h3><p>Фрукты прессуются холодным способом в день поставки, без нагрева.</p></div>
+    <div class="step"><div class="n">2</div><h3>Настаиваем</h3><p>Травы и специи сутки отдают аромат в сок — так розмарин звучит как розмарин.</p></div>
+    <div class="step"><div class="n">3</div><h3>Газируем</h3><p>Насыщаем углекислотой при +2 °C: пузырьки мельче и держатся дольше.</p></div>
+    <div class="step"><div class="n">4</div><h3>Закатываем</h3><p>Разливаем в алюминий, который перерабатывается бесконечно.</p></div>
+  </div>
+</div></section>
+
+<section class="blk gut" id="order" style="padding-top:20px"><div class="in rv">
+  <p class="kick">Набор</p>
+  <h2>Соберите свою коробку</h2>
+  <div class="order">
+    <div class="box" id="lines" aria-label="Вкусы в наборе"></div>
+    <div class="box total" aria-live="polite">
+      <div><span>Банок в коробке</span><b id="cnt">12 из 12</b></div>
+      <div class="bar2"><b id="fill" style="width:100%"></b></div>
+      <div><span>Цена банки</span><span>129 ₽</span></div>
+      <div><span>Скидка за полную коробку</span><span id="disc">−158 ₽</span></div>
+      <div class="big" id="sum">1 390 ₽</div>
+      <div class="note" id="note">Коробка собрана — доставка бесплатно.</div>
+      <button class="btn" id="buy" style="justify-content:center;margin-top:6px">Оформить заказ</button>
+      <div class="msg" id="msg" hidden>Это демо-сайт вымышленного бренда: заказ никуда не отправляется.</div>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<footer class="gut"><div class="in">
+  <div class="big">ИСКРА</div>
+  <div class="row"><span>Вымышленный бренд. Концепт сайта для портфолио.</span><span>Банка 330 мл · хранить в холоде · встряхивать не нужно</span></div>
+</div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $=s=>document.querySelector(s);
+const FL=[
+  {n:'Грейпфрут и розмарин',s:'Горчинка грейпфрута и хвойная свежесть',tag:'Бодрит',bg:'#ff8f7e',deep:'#6e1428',soft:'#ffe6df',can:'#ff5c5c',can2:'#ffb3a1',fruit:'#ff3d5e'},
+  {n:'Огурец и мята',s:'Самый освежающий: как сад после дождя',tag:'Освежает',bg:'#9fe3b4',deep:'#0f4a32',soft:'#e2f8e8',can:'#2fbf71',can2:'#c9f2d6',fruit:'#7ed957'},
+  {n:'Облепиха и имбирь',s:'Кислая облепиха и тёплый острый имбирь',tag:'Согревает',bg:'#ffbb4a',deep:'#5c2600',soft:'#fff0d2',can:'#ff8a00',can2:'#ffd27a',fruit:'#ffb000'},
+  {n:'Черника и лаванда',s:'Ягодный и цветочный, для вечера',tag:'Успокаивает',bg:'#bba6ff',deep:'#271560',soft:'#eee8ff',can:'#6a4cff',can2:'#cdbfff',fruit:'#3d2bd1'}
+];
+let cur=0;
+
+/* ---------- label texture (shared by 3D can and flat cards) ---------- */
+function label(f,w=1024,h=512){
+  const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');
+  x.fillStyle=f.can;x.fillRect(0,0,w,h);
+  // wave band
+  x.fillStyle=f.can2;x.beginPath();x.moveTo(0,h*.62);
+  for(let i=0;i<=w;i+=8)x.lineTo(i,h*.62+Math.sin(i/w*Math.PI*6)*h*.05);x.lineTo(w,h);x.lineTo(0,h);x.fill();
+  // fruit slices around the back
+  const slice=(cx,cy,r)=>{x.fillStyle='#fff';x.beginPath();x.arc(cx,cy,r,0,7);x.fill();x.fillStyle=f.fruit;x.beginPath();x.arc(cx,cy,r*.86,0,7);x.fill();
+    x.strokeStyle='rgba(255,255,255,.75)';x.lineWidth=r*.06;for(let k=0;k<8;k++){const a=k/8*Math.PI*2;x.beginPath();x.moveTo(cx,cy);x.lineTo(cx+Math.cos(a)*r*.8,cy+Math.sin(a)*r*.8);x.stroke()}};
+  slice(w*.06,h*.3,h*.12);slice(w*.9,h*.25,h*.1);slice(w*.95,h*.78,h*.08);slice(w*.08,h*.82,h*.09);
+  // sparks
+  x.fillStyle='#fff';[[.2,.15],[.8,.12],[.75,.5],[.27,.55]].forEach(([u,v])=>{x.save();x.translate(u*w,v*h);x.beginPath();
+    for(let k=0;k<8;k++){const r=k%2?h*.012:h*.04,a=k/8*Math.PI*2;x.lineTo(Math.cos(a)*r,Math.sin(a)*r)}x.fill();x.restore()});
+  // brand, centred at u=.5 (front)
+  x.fillStyle=f.deep;x.textAlign='center';x.textBaseline='alphabetic';
+  x.font=`400 ${h*.16}px "Dela Gothic One", "Arial Black", sans-serif`;x.fillText('ИСКРА',w*.5,h*.36);
+  x.font=`600 ${h*.042}px Onest, system-ui, sans-serif`;x.fillText('КРАФТОВЫЙ ЛИМОНАД',w*.5,h*.45);
+  x.fillStyle='#fff';x.font=`400 ${h*.065}px "Dela Gothic One", sans-serif`;
+  const parts=f.n.split(' и ');x.fillText(parts[0].toUpperCase(),w*.5,h*.76);x.font=`600 ${h*.045}px Onest, sans-serif`;x.fillText('и '+parts[1],w*.5,h*.84);
+  x.fillStyle=f.deep;x.font=`600 ${h*.035}px Onest, sans-serif`;x.fillText('330 мл',w*.5,h*.93);
+  // nutrition panel on the far side
+  x.fillStyle='rgba(255,255,255,.85)';x.fillRect(w*.0-1,h*.44,w*.04,h*.08);x.fillRect(w*.965,h*.44,w*.04,h*.08);
+  return c;
+}
+
+/* ---------- flavour UI ---------- */
+const flv=$('#flv'),cards=$('#cards'),lines=$('#lines'),flname=$('#flname');
+FL.forEach((f,i)=>{
+  const b=document.createElement('button');b.innerHTML=`<i style="background:${f.can}"></i>${f.n}`;b.setAttribute('aria-pressed',i===0);
+  b.addEventListener('click',()=>setFlavor(i));flv.appendChild(b);
+  const card=document.createElement('button');card.className='card';card.style.background=f.soft;card.style.color=f.deep;card.setAttribute('aria-pressed',i===0);
+  card.innerHTML=`<div class="can"><div></div></div><span class="tag">${f.tag}</span><h3>${f.n}</h3><p>${f.s}</p>`;
+  card.addEventListener('click',()=>{setFlavor(i);scrollTo({top:0,behavior:reduce?'auto':'smooth'})});
+  cards.appendChild(card);
+});
+function paintCards(){[...cards.children].forEach((c,i)=>{const lb=label(FL[i],512,256);
+  // crop the front half so the brand faces out
+  const cc=document.createElement('canvas');cc.width=204;cc.height=300;const x=cc.getContext('2d');x.drawImage(lb,154,0,204,256,0,0,204,300);
+  c.querySelector('.can div').style.backgroundImage=`url(${cc.toDataURL()})`})}
+paintCards();
+
+function setFlavor(i){
+  if(i===cur)return;cur=i;const f=FL[i],r=document.documentElement.style;
+  r.setProperty('--bg',f.bg);r.setProperty('--deep',f.deep);r.setProperty('--soft',f.soft);
+  [...flv.children].forEach((b,k)=>b.setAttribute('aria-pressed',k===i));
+  [...cards.children].forEach((b,k)=>b.setAttribute('aria-pressed',k===i));
+  flname.textContent=f.n;
+  if(C)C.spinTo(i);
+}
+
+/* ---------- order builder ---------- */
+const qty=[3,3,3,3],PRICE=129,BOX=12;
+lines.innerHTML=FL.map((f,i)=>`<div class="line"><i style="background:${f.can}"></i><span class="nm">${f.n}</span>
+  <span class="qty"><button data-i="${i}" data-d="-1" aria-label="Убрать: ${f.n}">−</button><output id="q${i}">3</output><button data-i="${i}" data-d="1" aria-label="Добавить: ${f.n}">+</button></span><span class="sum" id="s${i}"></span></div>`).join('');
+const fmt=n=>n.toLocaleString('ru-RU')+' ₽';
+function recalc(){
+  const n=qty.reduce((a,b)=>a+b,0);
+  qty.forEach((q,i)=>{$('#q'+i).textContent=q;$('#s'+i).textContent=fmt(q*PRICE)});
+  const full=n===BOX,base=n*PRICE,disc=full?base-1390:0;
+  $('#cnt').textContent=`${n} из ${BOX}`;$('#fill').style.width=Math.min(100,n/BOX*100)+'%';
+  $('#disc').textContent=disc?'−'+fmt(disc):'—';$('#sum').textContent=fmt(base-disc);
+  $('#note').textContent=full?'Коробка собрана — доставка бесплатно.':n<BOX?`Добавьте ещё ${BOX-n} — и коробка обойдётся в 1 390 ₽ с бесплатной доставкой.`:'В коробку помещается 12 банок.';
+  $('#buy').disabled=n===0;$('#msg').hidden=true;
+}
+lines.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const i=+b.dataset.i,d=+b.dataset.d,n=qty.reduce((a,c)=>a+c,0);
+  if(d>0&&n>=BOX)return;qty[i]=Math.max(0,qty[i]+d);recalc()});
+$('#buy').addEventListener('click',()=>{$('#msg').hidden=false});
+recalc();
+
+/* ---------- marquee + reveal ---------- */
+const mq=$('#mq');mq.innerHTML+=mq.innerHTML;
+document.querySelectorAll('.rv').forEach(el=>{if(reduce||!('IntersectionObserver' in window)||el.getBoundingClientRect().top<innerHeight)return;el.classList.add('pre');
+  new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){el.classList.remove('pre');o.disconnect()}},{threshold:.12}).observe(el)});
+
+/* ---------- bubbles ---------- */
+const bc=$('#bubbles'),bx=bc.getContext('2d');let B=[];
+function bsize(){const r=bc.getBoundingClientRect(),d=Math.min(devicePixelRatio,2);bc.width=r.width*d;bc.height=r.height*d;
+  B=Array.from({length:Math.round(r.width/22)},()=>({x:Math.random()*bc.width,y:Math.random()*bc.height,r:(2+Math.random()*9)*d,v:(.3+Math.random()*1.1)*d,w:Math.random()*6}))}
+new ResizeObserver(bsize).observe(bc);bsize();
+function bubbles(t){
+  bx.clearRect(0,0,bc.width,bc.height);bx.strokeStyle='rgba(255,255,255,.55)';bx.fillStyle='rgba(255,255,255,.14)';bx.lineWidth=1.5;
+  B.forEach(b=>{if(!reduce){b.y-=b.v;if(b.y<-20){b.y=bc.height+20;b.x=Math.random()*bc.width}}
+    const x=b.x+Math.sin(t/900+b.w)*6;bx.beginPath();bx.arc(x,b.y,b.r,0,7);bx.fill();bx.stroke()});
+}
+
+/* ---------- 3D can ---------- */
+let C=null;
+if(window.THREE){try{C=initCan()}catch(e){console.warn(e)}}
+function initCan(){
+  const canvas=$('#can'),stage=canvas.parentElement;
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputEncoding=THREE.sRGBEncoding;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;
+  const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(26,1,.1,50);camera.position.set(0,.2,8.4);
+  // studio reflections
+  const ec=document.createElement('canvas');ec.width=1024;ec.height=512;const e=ec.getContext('2d');
+  const g=e.createLinearGradient(0,0,0,512);g.addColorStop(0,'#ffffff');g.addColorStop(.5,'#8a8f96');g.addColorStop(1,'#3a3d42');e.fillStyle=g;e.fillRect(0,0,1024,512);
+  e.fillStyle='#fff';e.filter='blur(8px)';e.fillRect(180,60,120,300);e.fillRect(700,80,80,280);e.filter='none';
+  const et=new THREE.CanvasTexture(ec);et.mapping=THREE.EquirectangularReflectionMapping;et.encoding=THREE.sRGBEncoding;
+  const pm=new THREE.PMREMGenerator(renderer);scene.environment=pm.fromEquirectangular(et).texture;
+  scene.add(new THREE.AmbientLight(0xffffff,.4));const k=new THREE.DirectionalLight(0xffffff,1.2);k.position.set(3,4,5);scene.add(k);
+
+  const R=.66,HB=2.3;
+  const can=new THREE.Group(),tilt=new THREE.Group();tilt.add(can);scene.add(tilt);
+  const textures=FL.map(f=>{const t=new THREE.CanvasTexture(label(f));t.encoding=THREE.sRGBEncoding;t.anisotropy=8;return t});
+  const bodyMat=new THREE.MeshPhysicalMaterial({map:textures[0],metalness:.35,roughness:.28,clearcoat:1,clearcoatRoughness:.12});
+  const body=new THREE.Mesh(new THREE.CylinderGeometry(R,R,HB,96,1,true),bodyMat);body.rotation.y=Math.PI;can.add(body);
+  const metal=new THREE.MeshStandardMaterial({color:0xd9dde2,metalness:1,roughness:.25,side:THREE.DoubleSide});
+  const top=[[R,HB/2],[R*.97,HB/2+.08],[R*.84,HB/2+.2],[R*.86,HB/2+.25],[R*.83,HB/2+.27],[R*.78,HB/2+.21],[0,HB/2+.21]].map(([x,y])=>new THREE.Vector2(x,y));
+  const bot=[[0,-HB/2-.14],[R*.55,-HB/2-.12],[R*.75,-HB/2-.18],[R*.82,-HB/2-.16],[R*.98,-HB/2-.05],[R,-HB/2]].map(([x,y])=>new THREE.Vector2(x,y));
+  can.add(new THREE.Mesh(new THREE.LatheGeometry(top,96),metal));can.add(new THREE.Mesh(new THREE.LatheGeometry(bot,96),metal));
+  // pull tab
+  const tab=new THREE.Mesh(new THREE.TorusGeometry(.13,.035,10,32),metal);tab.rotation.x=Math.PI/2;tab.scale.set(1,1.5,1);tab.position.set(0,HB/2+.235,.12);can.add(tab);
+  const rivet=new THREE.Mesh(new THREE.CylinderGeometry(.05,.05,.03,20),metal);rivet.position.set(0,HB/2+.225,0);can.add(rivet);
+  // condensation droplets
+  const dropMat=new THREE.MeshPhysicalMaterial({color:0xffffff,metalness:0,roughness:0,transmission:.9,transparent:true,opacity:.55,clearcoat:1});
+  const dg=new THREE.SphereGeometry(1,10,8);let s=3;const rnd=()=>(s=(s*16807)%2147483647)/2147483647;
+  for(let i=0;i<70;i++){const a=rnd()*Math.PI*2,y=(rnd()-.5)*HB*.92,r=.012+rnd()*.026;const d=new THREE.Mesh(dg,dropMat);
+    d.position.set(Math.sin(a)*(R+.004),y,Math.cos(a)*(R+.004));d.scale.set(r,r*1.25,r*.5);d.lookAt(0,y,0);can.add(d)}
+
+  function resize(){const r=stage.getBoundingClientRect();renderer.setSize(r.width,r.height,false);camera.aspect=r.width/r.height;camera.updateProjectionMatrix()}
+  new ResizeObserver(resize).observe(stage);resize();
+
+  let ry=-.5,base=-.5,spin=null,mx=0,my=0,drag=false,lx=0,vel=0;
+  addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5},{passive:true});
+  canvas.addEventListener('pointerdown',e=>{if(e.pointerType==='touch')return;drag=true;lx=e.clientX;canvas.setPointerCapture(e.pointerId)});
+  canvas.addEventListener('pointermove',e=>{if(!drag)return;const d=(e.clientX-lx)*.01;lx=e.clientX;base+=d;vel=d});
+  addEventListener('pointerup',()=>drag=false);canvas.style.cursor='grab';
+  const t0=performance.now();
+  (function loop(){requestAnimationFrame(loop);const t=(performance.now()-t0)/1000;
+    if(spin){const k=Math.min(1,(performance.now()-spin.t)/900),e=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;
+      ry=spin.from+e*Math.PI*2;if(k>=.5&&!spin.swapped){bodyMat.map=textures[spin.i];bodyMat.needsUpdate=true;spin.swapped=true}
+      if(k>=1){base=spin.from+Math.PI*2;spin=null}}
+    else{if(!drag&&!reduce)base+=.0035+vel;vel*=.95;ry+=(base-ry)*.15}
+    can.rotation.y=ry;
+    tilt.rotation.set(reduce?0:.08+my*.1,0,reduce?.06:.12+Math.sin(t*.8)*.04-mx*.08);
+    tilt.position.y=reduce?0:Math.sin(t*1.3)*.08;
+    renderer.render(scene,camera);bubbles(performance.now())})();
+  document.fonts&&document.fonts.ready.then(()=>{FL.forEach((f,i)=>{textures[i].image=label(f);textures[i].needsUpdate=true});paintCards()});
+  return {spinTo(i){if(reduce){bodyMat.map=textures[i];bodyMat.needsUpdate=true;return}spin={from:ry,t:performance.now(),i,swapped:false}}};
+}
+if(!C){$('#can').remove();(function l(){requestAnimationFrame(l);bubbles(performance.now())})()}
+})();
+</script>
+</body>
+</html>
