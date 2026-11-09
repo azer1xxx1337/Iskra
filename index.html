@@ -19,7 +19,7 @@
   transition:--bg .7s ease, --deep .7s ease, --soft .7s ease;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;background:var(--bg)}
 body{background:var(--bg);color:var(--deep);font:17px/1.55 var(--body);overflow-x:hidden}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
 a{color:inherit}
@@ -28,7 +28,7 @@ a{color:inherit}
 .gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 
 /* nav */
-.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .nav .in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
 .logo{font:400 26px/1 var(--display);letter-spacing:.02em;text-decoration:none;display:flex;align-items:center;gap:8px}
 .logo svg{width:22px;height:22px}
@@ -283,12 +283,14 @@ function paintCards(){[...cards.children].forEach((c,i)=>{const lb=label(FL[i],5
   c.querySelector('.can div').style.backgroundImage=`url(${cc.toDataURL()})`})}
 paintCards();
 
+function setTheme(c){let m=document.head.querySelector('meta[name="theme-color"]');if(!m){m=document.createElement('meta');m.name='theme-color';document.head.appendChild(m)}m.content=c}
+setTheme(FL[0].bg);
 function setFlavor(i){
   if(i===cur)return;cur=i;const f=FL[i],r=document.documentElement.style;
   r.setProperty('--bg',f.bg);r.setProperty('--deep',f.deep);r.setProperty('--soft',f.soft);
   [...flv.children].forEach((b,k)=>b.setAttribute('aria-pressed',k===i));
   [...cards.children].forEach((b,k)=>b.setAttribute('aria-pressed',k===i));
-  flname.textContent=f.n;
+  flname.textContent=f.n;setTheme(f.bg);
   if(C)C.spinTo(i);
 }
 
